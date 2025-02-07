@@ -1,8 +1,7 @@
 const apiKey = '6c694e366dmsh18627374207b02cp1b5aadjsn8f05f481e2ca';
 const apiHost = 'weatherapi-com.p.rapidapi.com';
 
-let location1 = 'Delhi'; // Default location
-let url = `https://weatherapi-com.p.rapidapi.com/current.json?q=${location1}`;
+let url; // URL will be dynamically set
 
 const options = {
     method: 'GET',
@@ -12,12 +11,17 @@ const options = {
     }
 };
 
+
+
 async function fetchWeatherData() {
     try {
         const response = await fetch(url, options);
         if (!response.ok) throw new Error('Failed to fetch weather data');
         const result = await response.json();
+        console.log(result)
         displayWeather(result);
+        
+        
     } catch (error) {
         console.error(error);
         document.getElementById('weather-info').innerText = 'Failed to load weather data';
@@ -38,11 +42,37 @@ function displayWeather(data) {
     `;
 }
 
+
+
+// Function to get user's current location
+function getUserLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                url = `https://weatherapi-com.p.rapidapi.com/current.json?q=${lat},${lon}`;
+                fetchWeatherData();
+            },
+            (error) => {
+                console.warn("Geolocation denied or unavailable, using default location.");
+                url = `https://weatherapi-com.p.rapidapi.com/current.json?q=Delhi`;
+                fetchWeatherData();
+            }
+        );
+    } else {
+        console.warn("Geolocation not supported, using default location.");
+        url = `https://weatherapi-com.p.rapidapi.com/current.json?q=Delhi`;
+        fetchWeatherData();
+    }
+}
+
+// Search functionality for manual location input
 document.getElementById('change-location').addEventListener('click', () => {
     const newLocation = document.getElementById('location-input').value.trim() || 'Delhi';
     url = `https://weatherapi-com.p.rapidapi.com/current.json?q=${encodeURIComponent(newLocation)}`;
     fetchWeatherData();
 });
 
-// Initial fetch
-fetchWeatherData();
+// Run the function to get user's location when the app loads
+getUserLocation();
