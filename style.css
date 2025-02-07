@@ -51,6 +51,7 @@ body {
     display: flex;
     align-items: center;
     background: rgba(255, 255, 255, 0.2);
+    width:499px;
     padding: 10px;
     border-radius: 10px;
     gap: 10px;
@@ -100,7 +101,7 @@ body {
     background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(15px);
     padding: 30px;
-    border-radius: 15px;
+    border-radius: 10px;
     text-align: center;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     margin-top: 10px;
@@ -175,6 +176,7 @@ body {
     .search_bar {
         flex-direction: column;
         gap: 8px;
+        width: auto;
     }
 
     .main_contents {
@@ -192,4 +194,5 @@ body {
     .temp1 {
         font-size: 20px;
     }
+
 }
