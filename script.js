@@ -56,13 +56,13 @@ function getUserLocation() {
             },
             (error) => {
                 console.warn("Geolocation denied or unavailable, using default location.");
-                url = `https://weatherapi-com.p.rapidapi.com/current.json?q=Delhi`;
+                url = `https://weatherapi-com.p.rapidapi.com/current.json?q=Delhi,India`;
                 fetchWeatherData();
             }
         );
     } else {
         console.warn("Geolocation not supported, using default location.");
-        url = `https://weatherapi-com.p.rapidapi.com/current.json?q=Delhi`;
+        url = `https://weatherapi-com.p.rapidapi.com/current.json?q=Delhi.India`;
         fetchWeatherData();
     }
 }
